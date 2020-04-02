@@ -17,12 +17,19 @@ and a postgres db backend, and also ldaps authrntication against the Synology's 
 - others - tbc.
 
 ## Quick start - Synology DiskStation
-Download the prepare.sh script from the repository and run it.
+Download the prepare.sh script from the repository and run it:
 ~~~sh
 mkdir ./syn-guac
 cd syn-guac
 wget -O ./prepare.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/prepare.sh"
-chmod +x ./prepare.sh
-./prepare.sh 
-docker-compose up -d
+sudo chmod +x ./prepare.sh
+sudo ./prepare.sh 
 ~~~
+
+Implementation specific adjustments, like the DNS FQDN and email address for certificate issuing,
+domain name and suffix etc. should be made to the compse-up.sh - when done run it:
+~~~sh
+sudo ./compose-up.sh
+~~~
+
+

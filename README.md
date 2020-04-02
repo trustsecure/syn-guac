@@ -17,7 +17,7 @@ and a postgres db backend, and also ldaps authrntication against the Synology's 
 - others - tbc.
 
 ## Quick start - Synology DiskStation
-Download the prepare.sh script from the repository and run it:
+Download the `prepare.sh` script from the repository and run it:
 ~~~sh
 mkdir ./syn-guac
 cd syn-guac

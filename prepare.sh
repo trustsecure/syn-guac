@@ -5,6 +5,7 @@ echo "Preparing directory structure..."
 mkdir ./scripts >/dev/null 2>&1
 mkdir ./cert-import >/dev/null 2>&1
 
+mkdir ./database >/dev/null 2>&1
 mkdir ./database/data >/dev/null 2>&1
 mkdir ./database/init >/dev/null 2>&1
 chmod -R +x ./database/init
@@ -33,13 +34,13 @@ wget -nv -O ./nginx/conf.d/default.conf "https://raw.githubusercontent.com/trust
 # Get the nginx static page file.
 wget -nv -O ./nginx/static/index.html "https://raw.githubusercontent.com/trustsecure/syn-guac/master/nginx/static/index.html"
 # Get the docker-compose file for the stack.
-wget "https://raw.githubusercontent.com/trustsecure/syn-guac/master/docker-compose.yml"
+wget -nv "https://raw.githubusercontent.com/trustsecure/syn-guac/master/docker-compose.yml"
 
 # Get the reset.sh script, and mark as executable.
-wget -nv -O ./scripts/reset.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/reset.sh"
+wget -nv -O ./scripts/reset.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/scripts/reset.sh"
 chmod +x ./scripts/reset.sh
 # Get the compose-up.sh script, and mark as executable.
-wget -nv -O ./scripts/compose-up.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/compose-up.sh"
+wget -nv -O ./scripts/compose-up.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/scripts/compose-up.sh"
 chmod +x ./scripts/compose-up.sh
 echo "done"
 

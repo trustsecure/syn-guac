@@ -1,13 +1,6 @@
 ####################################################################################
-# docker-compose file for Apache Guacamole on Synology DiskStation
+#  docker-compose file for syn-guac - Apache Guacamole on Synology DiskStation
 ####################################################################################
-#
-# !!!!! FOR INITAL SETUP (after git clone) run ./prepare.sh once
-#
-# !!!!! FOR A FULL RESET (WILL ERASE YOUR DATABASE, YOUR FILES, YOUR RECORDS AND CERTS) DO A
-# !!!!!  ./reset.sh
-#
-#
 # The initial login to the guacamole webinterface is:
 #
 #     Username: guacadmin
@@ -15,9 +8,7 @@
 #
 # Make sure you change it immediately!
 ####################################################################################
-
 version: '3.0'
-
 networks:
   internal_network:
     driver: bridge
@@ -61,8 +52,9 @@ services:
     links:
     - guacd
     volumes:
+    - ./guacamole/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
+    - ./guacamole/entrypoint/certimport-entrypoint.sh:/tmp/entrypoint.sh:ro
     - ./cert-import:/tmp/cert-import:ro
-    - ./guacamole/entrypoint/certimport-entrypoint.sh:/tmp/entrypoint.sh
     entrypoint: /tmp/entrypoint.sh
     environment:
       GUACD_HOSTNAME: guacd

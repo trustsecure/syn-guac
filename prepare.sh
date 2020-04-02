@@ -6,8 +6,8 @@ mkdir ./scripts >/dev/null 2>&1
 mkdir ./cert-import >/dev/null 2>&1
 
 mkdir ./database >/dev/null 2>&1
-mkdir ./database/data >/dev/null 2>&1
 mkdir ./database/init >/dev/null 2>&1
+mkdir ./database/data >/dev/null 2>&1
 chmod -R +x ./database/init
 
 mkdir ./guacamole >/dev/null 2>&1

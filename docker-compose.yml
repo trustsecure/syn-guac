@@ -18,16 +18,11 @@
 
 version: '3.0'
 
-# networks
-# create a network 'guac_network' in mode 'bridged'
 networks:
   internal_network:
     driver: bridge
-
 volumes:
   letsencrypt:
-
-# services
 services:
   guacd:
     container_name: syn-guac_guacd
@@ -36,27 +31,39 @@ services:
       internal_network:
     restart: always
     volumes:
-    - ./drive:/drive:rw
-    - ./record:/record:rw
+    - ./guacamole/drive:/drive:rw
+    - ./guacamole/record:/record:rw
   postgres:
     container_name: syn-guac_postgres
+    image: postgres
+    restart: always
+    networks:
+      internal_network:
+    volumes:
+    - ./database/init:/docker-entrypoint-initdb.d:ro
+    - ./database/data:/var/lib/postgresql/data:rw
     environment:
       PGDATA: /var/lib/postgresql/data/guacamole
       POSTGRES_DB: guacamole_db
       POSTGRES_USER: guacamole_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    image: postgres
-    networks:
-      internal_network:
-    restart: always
-    volumes:
-    - ./init:/docker-entrypoint-initdb.d:ro
-    - ./data:/var/lib/postgresql/data:rw
   guacamole:
     container_name: syn-guac_guacamole
+    image: guacamole/guacamole
+    restart: always
     depends_on:
     - guacd
     - postgres
+    networks:
+      internal_network:
+    ports:
+    - 8080/tcp
+    links:
+    - guacd
+    volumes:
+    - ./cert-import:/tmp/cert-import:ro
+    - ./guacamole/entrypoint/certimport-entrypoint.sh:/tmp/entrypoint.sh
+    entrypoint: /tmp/entrypoint.sh
     environment:
       GUACD_HOSTNAME: guacd
       POSTGRES_HOSTNAME: postgres
@@ -72,33 +79,23 @@ services:
       LDAP_USERNAME_ATTRIBUTE: sAMAccountName
       LDAP_USER_SEARCH_FILTER: "(&(objectCategory=user)(objectClass=user)(memberOf=CN=Guacamole Users,OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}))"
       LDAP_GROUP_BASE_DN: "OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}"
-    image: guacamole/guacamole
-    links:
-    - guacd
-    networks:
-      internal_network:
-    ports:
-    - 8080/tcp
-    restart: always
-    volumes:
-    - ./cert-import:/tmp/cert-import:ro
-    entrypoint: /tmp/cert-import/install-cert-startup.sh
   nginx:
    container_name: syn-guac_nginx-certbot
-   restart: always
    image: staticfloat/nginx-certbot
-   volumes:
-   - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
-   - ./nginx/static:/etc/nginx/static:ro
-   - letsencrypt:/etc/letsencrypt:rw
+   restart: always
+   networks:
+     internal_network:
    ports:
    - 8080:80/tcp
    - 8443:443/tcp
    links:
    - guacamole
-   networks:
-     internal_network:
+   volumes:
+   - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
+   - ./nginx/static:/etc/nginx/static:ro
+   - letsencrypt:/etc/letsencrypt:rw
    environment:
       CERTBOT_EMAIL: ${CERTBOT_EMAIL}
       FQDN: ${CERTBOT_FQDN}
       ENVSUBST_VARS: FQDN
+      

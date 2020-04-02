@@ -1,5 +1,5 @@
-drive/
-record/
-data/
-init/initdb.sql
+guacamole/drive/
+guacamole/record/
+database/data/
+database/init/initdb.sql
 cert-import/*.pem

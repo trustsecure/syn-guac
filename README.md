@@ -31,7 +31,7 @@ The `prepare.sh` script will create a folder structure and download files from t
 Implementation specific adjustments, like the DNS FQDN and email address for certificate issuing,
 domain name and suffix etc. should be made to the `compose-up.sh` script - when done run it:
 ~~~sh
-sudo ./compose-up.sh
+sudo ./scripts/compose-up.sh
 ~~~
 
 

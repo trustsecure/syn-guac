@@ -1,5 +1,5 @@
-guacamole/drive/
-guacamole/record/
-database/data/
-database/init/initdb.sql
-cert-import/*.pem
+guac/guacamole/drive/
+guac/guacamole/record/
+guac/database/data/
+guac/database/init/initdb.sql
+guac/cert-import/*.pem

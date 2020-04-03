@@ -1,5 +1,5 @@
 ####################################################################################
-#  docker-compose file for syn-guac - Apache Guacamole on Synology DiskStation
+#  docker-compose file for syn-guac app - Apache Guacamole on Synology DiskStation
 ####################################################################################
 # The initial login to the guacamole webinterface is:
 #
@@ -12,16 +12,16 @@ version: '3.0'
 networks:
   internal_network:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.31.0.0/24
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.31.0.0/24
    
-volumes:
-  letsencrypt:
+#volumes:
+#  letsencrypt:
 services:
   guacd:
-    container_name: syn-guac_guacd
+    container_name: guac_guacd
     image: guacamole/guacd
     networks:
       internal_network:
@@ -30,7 +30,7 @@ services:
       - ./guacamole/drive:/drive:rw
       - ./guacamole/record:/record:rw
   postgres:
-    container_name: syn-guac_postgres
+    container_name: guac_postgres
     image: postgres
     restart: always
     networks:
@@ -44,7 +44,7 @@ services:
       POSTGRES_USER: guacamole_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
   guacamole:
-    container_name: syn-guac_guacamole
+    container_name: guac_guacamole
     image: guacamole/guacamole
     restart: always
     depends_on:
@@ -76,24 +76,24 @@ services:
       LDAP_USERNAME_ATTRIBUTE: sAMAccountName
       LDAP_USER_SEARCH_FILTER: "(&(objectCategory=user)(objectClass=user)(memberOf=CN=Guacamole Users,OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}))"
       LDAP_GROUP_BASE_DN: "OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}"
-  nginx:
-    container_name: syn-guac_nginx-certbot
-    image: staticfloat/nginx-certbot
-    restart: always
-    networks:
-     internal_network:
-        ipv4_address: 172.31.0.254
-    ports:
-      - 8080:80/tcp
-      - 8443:443/tcp
-    links:
-      - guacamole
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
-      - ./nginx/static:/etc/nginx/static:ro
-      - letsencrypt:/etc/letsencrypt:rw
-      environment:
-      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-      FQDN: ${CERTBOT_FQDN}
-      ENVSUBST_VARS: FQDN
+#  nginx:
+#    container_name: syn-guac_nginx-certbot
+#    image: staticfloat/nginx-certbot
+#    restart: always
+#    networks:
+#     internal_network:
+#        ipv4_address: 172.31.0.254
+#    ports:
+#      - 8080:80/tcp
+#      - 8443:443/tcp
+#    links:
+#      - guacamole
+#    volumes:
+#      - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
+#      - ./nginx/static:/etc/nginx/static:ro
+#      - letsencrypt:/etc/letsencrypt:rw
+#      environment:
+#      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
+#      FQDN: ${CERTBOT_FQDN}
+#      ENVSUBST_VARS: FQDN
       

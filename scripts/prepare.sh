@@ -23,7 +23,9 @@ mkdir ./proxy/nginx/static >/dev/null 2>&1
 echo "done"
 echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"
-wget -nv -O ./scripts/compose-up.sh "${REPO_STUB}/scripts/compose-up.sh"
+wget -nv -O ./scripts/compose-up-guac.sh "${REPO_STUB}/scripts/compose-up-guac.sh"
+wget -nv -O ./scripts/compose-up-proxy.sh "${REPO_STUB}/scripts/compose-up-proxy.sh"
+wget -nv -O ./scripts/csyn-guac.conf "${REPO_STUB}/scripts/syn-guac.conf"
 wget -nv -O ./guac/docker-compose.yml "${REPO_STUB}/guac/docker-compose.yml"
 wget -nv -O ./guac/guacamole/conf/server.xml "${REPO_STUB}/guac/guacamole/conf/server.xml"
 wget -nv -O ./guac/guacamole/entrypoint/certimport-entrypoint.sh "${REPO_STUB}/guac/guacamole/entrypoint/certimport-entrypoint.sh"
@@ -32,7 +34,8 @@ wget -nv -O ./proxy/nginx/conf.d/default.conf "${REPO_STUB}/proxy/nginx/conf.d/d
 wget -nv -O ./proxy/nginx/static/index.html "${REPO_STUB}/proxy/nginx/static/index.html"
 chmod +x ./guac/guacamole/entrypoint/certimport-entrypoint.sh
 chmod +x ./scripts/reset.sh
-chmod +x ./scripts/compose-up.sh
+chmod +x ./scripts/compose-up-guac.sh
+chmod +x ./scripts/compose-up-proxy.sh
 echo "done"
 echo "Creating database initialisation data..."
 docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./guac/database/init/initdb.sql

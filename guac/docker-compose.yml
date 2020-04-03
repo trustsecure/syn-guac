@@ -69,24 +69,3 @@ services:
       LDAP_USERNAME_ATTRIBUTE: sAMAccountName
       LDAP_USER_SEARCH_FILTER: "(&(objectCategory=user)(objectClass=user)(memberOf=CN=Guacamole Users,OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}))"
       LDAP_GROUP_BASE_DN: "OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}"
-#  nginx:
-#    container_name: syn-guac_nginx-certbot
-#    image: staticfloat/nginx-certbot
-#    restart: always
-#    networks:
-#     internal_network:
-#        ipv4_address: 172.31.0.254
-#    ports:
-#      - 8080:80/tcp
-#      - 8443:443/tcp
-#    links:
-#      - guacamole
-#    volumes:
-#      - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
-#      - ./nginx/static:/etc/nginx/static:ro
-#      - letsencrypt:/etc/letsencrypt:rw
-#      environment:
-#      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-#      FQDN: ${CERTBOT_FQDN}
-#      ENVSUBST_VARS: FQDN
-      

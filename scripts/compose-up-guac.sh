@@ -9,4 +9,4 @@ export COMPONENT=guac
 export $(grep --regexp ^[A-Z] ${APP_DIRECTORY}/scripts/${CONFIG_FILE} | cut -d= -f1)
 
 # Bring up the stack.
-docker-compose up -f ${APP_DIRECTORY}/${COMPONENT}/docker-compose.yml -p ${COMPONENT} -d
+docker-compose -f ${APP_DIRECTORY}/${COMPONENT}/docker-compose.yml up -p ${COMPONENT} -d

@@ -13,8 +13,8 @@ services:
     ports:
       - 80/tcp
       - 443/tcp
-    links:
-      - guacamole
+#    links:
+#      - guacamole
     volumes:
       - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
       - ./nginx/static:/etc/nginx/static:ro

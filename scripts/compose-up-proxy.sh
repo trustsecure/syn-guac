@@ -6,7 +6,7 @@ export CONFIG_FILE=syn-guac.conf
 export COMPONENT=proxy
 
 # Read in configuration settings as variables and export them to the environment.
-export $(grep --regexp ^[A-Z] ${APP_DIRECTORY}/${CONFIG_FILE} | cut -d= -f1)
+export $(grep --regexp ^[A-Z] ${APP_DIRECTORY}/scripts/${CONFIG_FILE} | cut -d= -f1)
 
 # Bring up the stack.
 docker-compose up -d -f ${APP_DIRECTORY}/${COMPONENT}/docker-compose.yml

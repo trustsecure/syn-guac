@@ -21,7 +21,7 @@ Download the `prepare.sh` script from the repository and run it:
 ~~~sh
 mkdir ./syn-guac
 cd syn-guac
-wget "https://raw.githubusercontent.com/trustsecure/syn-guac/master/prepare.sh"
+wget -nv "https://raw.githubusercontent.com/trustsecure/syn-guac/master/prepare.sh"
 chmod +x ./prepare.sh
 sudo ./prepare.sh 
 ~~~

@@ -9,4 +9,4 @@ export COMPONENT=proxy
 export $(grep --regexp ^[A-Z] ${APP_DIRECTORY}/scripts/${CONFIG_FILE} | cut -d= -f1)
 
 # Bring up the stack.
-docker-compose up -d -f ${APP_DIRECTORY}/${COMPONENT}/docker-compose.yml
+docker-compose up -f ${APP_DIRECTORY}/${COMPONENT}/docker-compose.yml -p ${COMPONENT} -d

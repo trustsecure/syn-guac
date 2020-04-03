@@ -35,7 +35,7 @@ chmod +x ./scripts/reset.sh
 chmod +x ./scripts/compose-up.sh
 echo "done"
 echo "Creating database initialisation data..."
-docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./database/init/initdb.sql
+docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./guac/database/init/initdb.sql
 echo "done"
 echo "Copying DEFAULT syno-ca-cert.pem for import to container(s)..."
 # Grab DiskStation's default certificate (make sure the AD SSL self-cert is set as the default!)

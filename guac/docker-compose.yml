@@ -12,13 +12,6 @@ version: '3.0'
 networks:
   internal_network:
     driver: bridge
-#    ipam:
-#      driver: default
-#      config:
-#        - subnet: 172.31.0.0/24
-   
-#volumes:
-#  letsencrypt:
 services:
   guacd:
     container_name: guac_guacd
@@ -53,7 +46,7 @@ services:
     networks:
       internal_network:
     ports:
-      - 8080/tcp
+      - 8080:8080/tcp
     links:
       - guacd
     volumes:

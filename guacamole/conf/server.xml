@@ -163,13 +163,11 @@
 
 		<!-- Guacamole requires Tomcat to pass through the remote IP address
 		provided by the reverse proxy in the 'X-Forwarded-For' header -->
-		<!--
 		<Valve className="org.apache.catalina.valves.RemoteIpValve"
-               internalProxies="127.0.0.1"
+               internalProxies="172\.31\.0\.1|172\.31\.0\.254"
                remoteIpHeader="x-forwarded-for"
                remoteIpProxiesHeader="x-forwarded-by"
                protocolHeader="x-forwarded-proto" />
-		-->
 
       </Host>
     </Engine>

@@ -12,6 +12,11 @@ version: '3.0'
 networks:
   internal_network:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.0.0/24
+   
 volumes:
   letsencrypt:
 services:
@@ -22,8 +27,8 @@ services:
       internal_network:
     restart: always
     volumes:
-    - ./guacamole/drive:/drive:rw
-    - ./guacamole/record:/record:rw
+      - ./guacamole/drive:/drive:rw
+      - ./guacamole/record:/record:rw
   postgres:
     container_name: syn-guac_postgres
     image: postgres
@@ -31,8 +36,8 @@ services:
     networks:
       internal_network:
     volumes:
-    - ./database/init:/docker-entrypoint-initdb.d:ro
-    - ./database/data:/var/lib/postgresql/data:rw
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+      - ./database/data:/var/lib/postgresql/data:rw
     environment:
       PGDATA: /var/lib/postgresql/data/guacamole
       POSTGRES_DB: guacamole_db
@@ -43,18 +48,18 @@ services:
     image: guacamole/guacamole
     restart: always
     depends_on:
-    - guacd
-    - postgres
+      - guacd
+      - postgres
     networks:
       internal_network:
     ports:
-    - 8080/tcp
+      - 8080/tcp
     links:
-    - guacd
+      - guacd
     volumes:
-    - ./guacamole/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
-    - ./guacamole/entrypoint/certimport-entrypoint.sh:/tmp/entrypoint.sh:ro
-    - ./cert-import:/tmp/cert-import:ro
+      - ./guacamole/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
+      - ./guacamole/entrypoint/certimport-entrypoint.sh:/tmp/entrypoint.sh:ro
+      - ./cert-import:/tmp/cert-import:ro
     entrypoint: /tmp/entrypoint.sh
     environment:
       GUACD_HOSTNAME: guacd
@@ -72,21 +77,22 @@ services:
       LDAP_USER_SEARCH_FILTER: "(&(objectCategory=user)(objectClass=user)(memberOf=CN=Guacamole Users,OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}))"
       LDAP_GROUP_BASE_DN: "OU=Groups,OU=MyOrg,DC=${ORG_DOMAIN_NAME},DC=${ORG_DOMAIN_SUFFIX}"
   nginx:
-   container_name: syn-guac_nginx-certbot
-   image: staticfloat/nginx-certbot
-   restart: always
-   networks:
+    container_name: syn-guac_nginx-certbot
+    image: staticfloat/nginx-certbot
+    restart: always
+    networks:
      internal_network:
-   ports:
-   - 8080:80/tcp
-   - 8443:443/tcp
-   links:
-   - guacamole
-   volumes:
-   - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
-   - ./nginx/static:/etc/nginx/static:ro
-   - letsencrypt:/etc/letsencrypt:rw
-   environment:
+        ipv4_address: 172.31.0.254
+    ports:
+      - 8080:80/tcp
+      - 8443:443/tcp
+    links:
+      - guacamole
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
+      - ./nginx/static:/etc/nginx/static:ro
+      - letsencrypt:/etc/letsencrypt:rw
+      environment:
       CERTBOT_EMAIL: ${CERTBOT_EMAIL}
       FQDN: ${CERTBOT_FQDN}
       ENVSUBST_VARS: FQDN

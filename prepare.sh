@@ -1,7 +1,7 @@
 #!/bin/sh
 # This script is intended to be run on a Synology DiskStation. Tested on DS918+
-set BRANCH=master
-set REPO_URI="https://raw.githubusercontent.com/trustsecure/syn-guac"
+export BRANCH=master
+export REPO_URI="https://raw.githubusercontent.com/trustsecure/syn-guac"
 export REPO_STUB="${REPO_URI}/${BRANCH}"
 echo "Preparing directory structure..."
 mkdir ./scripts >/dev/null 2>&1
@@ -10,6 +10,7 @@ mkdir ./guac/cert-import >/dev/null 2>&1
 mkdir ./guac/database >/dev/null 2>&1
 mkdir ./guac/database/data >/dev/null 2>&1
 mkdir ./guac/database/init >/dev/null 2>&1
+chmod -R +x ./guac/database/init
 mkdir ./guac/guacamole >/dev/null 2>&1
 mkdir ./guac/guacamole/conf >/dev/null 2>&1
 mkdir ./guac/guacamole/entrypoint >/dev/null 2>&1
@@ -19,7 +20,6 @@ mkdir ./proxy >/dev/null 2>&1
 mkdir ./proxy/nginx >/dev/null 2>&1
 mkdir ./proxy/nginx/conf.d >/dev/null 2>&1
 mkdir ./proxy/nginx/static >/dev/null 2>&1
-chmod -R +x ./database/init
 echo "done"
 echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"

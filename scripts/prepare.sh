@@ -23,8 +23,6 @@ mkdir ./proxy/nginx/static >/dev/null 2>&1
 echo "done"
 echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"
-wget -nv -O ./scripts/compose-up-guac.sh "${REPO_STUB}/scripts/compose-up-guac.sh"
-wget -nv -O ./scripts/compose-up-proxy.sh "${REPO_STUB}/scripts/compose-up-proxy.sh"
 wget -nv -O ./scripts/certimport-entrypoint.sh "${REPO_STUB}/scripts/certimport-entrypoint.sh"
 wget -nv -O ./guac/docker-compose.yml "${REPO_STUB}/guac/docker-compose.yml"
 wget -nv -O ./guac/.env "${REPO_STUB}/guac/.env"
@@ -36,8 +34,6 @@ wget -nv -O ./proxy/nginx/conf/certbot.conf "${REPO_STUB}/proxy/nginx/conf/certb
 wget -nv -O ./proxy/nginx/conf/default.conf "${REPO_STUB}/proxy/nginx/conf/default.conf"
 wget -nv -O ./proxy/nginx/wwwroot/index.html "${REPO_STUB}/proxy/nginx/wwwroot/index.html"
 chmod +x ./scripts/reset.sh
-chmod +x ./scripts/compose-up-guac.sh
-chmod +x ./scripts/compose-up-proxy.sh
 chmod +x ./scripts/certimport-entrypoint.sh
 echo "done"
 echo "Creating database initialisation data..."

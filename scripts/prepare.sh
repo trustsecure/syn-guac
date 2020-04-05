@@ -25,17 +25,20 @@ echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"
 wget -nv -O ./scripts/compose-up-guac.sh "${REPO_STUB}/scripts/compose-up-guac.sh"
 wget -nv -O ./scripts/compose-up-proxy.sh "${REPO_STUB}/scripts/compose-up-proxy.sh"
-wget -nv -O ./scripts/syn-guac.conf "${REPO_STUB}/scripts/syn-guac.conf"
+wget -nv -O ./scripts/certimport-entrypoint.sh "${REPO_STUB}/scripts/certimport-entrypoint.sh"
 wget -nv -O ./guac/docker-compose.yml "${REPO_STUB}/guac/docker-compose.yml"
+wget -nv -O ./guac/.env "${REPO_STUB}/guac/.env"
 wget -nv -O ./guac/guacamole/conf/server.xml "${REPO_STUB}/guac/guacamole/conf/server.xml"
-wget -nv -O ./guac/guacamole/entrypoint/certimport-entrypoint.sh "${REPO_STUB}/guac/guacamole/entrypoint/certimport-entrypoint.sh"
 wget -nv -O ./proxy/docker-compose.yml "${REPO_STUB}/proxy/docker-compose.yml"
-wget -nv -O ./proxy/nginx/conf.d/default.conf "${REPO_STUB}/proxy/nginx/conf.d/default.conf"
-wget -nv -O ./proxy/nginx/static/index.html "${REPO_STUB}/proxy/nginx/static/index.html"
-chmod +x ./guac/guacamole/entrypoint/certimport-entrypoint.sh
+wget -nv -O ./proxy/.env "${REPO_STUB}/proxy/.env"
+#wget -nv -O ./proxy/nginx/conf/nginx.conf "${REPO_STUB}/proxy/nginx/conf/nginx.conf"
+wget -nv -O ./proxy/nginx/conf/certbot.conf "${REPO_STUB}/proxy/nginx/conf/certbot.conf"
+wget -nv -O ./proxy/nginx/conf/default.conf "${REPO_STUB}/proxy/nginx/conf/default.conf"
+wget -nv -O ./proxy/nginx/wwwroot/index.html "${REPO_STUB}/proxy/nginx/wwwroot/index.html"
 chmod +x ./scripts/reset.sh
 chmod +x ./scripts/compose-up-guac.sh
 chmod +x ./scripts/compose-up-proxy.sh
+chmod +x ./scripts/certimport-entrypoint.sh
 echo "done"
 echo "Creating database initialisation data..."
 docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./guac/database/init/initdb.sql

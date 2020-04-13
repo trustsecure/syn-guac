@@ -4,19 +4,18 @@ export BRANCH=master
 export REPO_URI="https://raw.githubusercontent.com/trustsecure/syn-guac"
 export REPO_STUB="${REPO_URI}/${BRANCH}"
 echo "Preparing directory structure..."
-mkdir ./scripts >/dev/null 2>&1
-mkdir ./cert-import >/dev/null 2>&1
-mkdir ./database >/dev/null 2>&1
-mkdir ./database/data >/dev/null 2>&1
-mkdir ./database/init >/dev/null 2>&1
+mkdir ./cert-import
+mkdir ./database
+mkdir ./database/data
+mkdir ./database/init
 chmod -R +x ./database/init
-mkdir ./guacamole >/dev/null 2>&1
-mkdir ./guacamole/conf >/dev/null 2>&1
-mkdir ./guacamole/drive >/dev/null 2>&1
-mkdir ./guacamole/record >/dev/null 2>&1
-mkdir ./nginx >/dev/null 2>&1
-mkdir ./nginx/conf >/dev/null 2>&1
-mkdir ./nginx/static >/dev/null 2>&1
+mkdir ./guacamole
+mkdir ./guacamole/conf
+mkdir ./guacamole/drive
+mkdir ./guacamole/record
+mkdir ./nginx
+mkdir ./nginx/conf
+mkdir ./nginx/wwwroot
 echo "done"
 echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"

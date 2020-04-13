@@ -5,49 +5,43 @@ export REPO_URI="https://raw.githubusercontent.com/trustsecure/syn-guac"
 export REPO_STUB="${REPO_URI}/${BRANCH}"
 echo "Preparing directory structure..."
 mkdir ./scripts >/dev/null 2>&1
-mkdir ./guac >/dev/null 2>&1
-mkdir ./guac/cert-import >/dev/null 2>&1
-mkdir ./guac/database >/dev/null 2>&1
-mkdir ./guac/database/data >/dev/null 2>&1
-mkdir ./guac/database/init >/dev/null 2>&1
-chmod -R +x ./guac/database/init
-mkdir ./guac/guacamole >/dev/null 2>&1
-mkdir ./guac/guacamole/conf >/dev/null 2>&1
-mkdir ./guac/guacamole/entrypoint >/dev/null 2>&1
-mkdir ./guac/guacamole/drive >/dev/null 2>&1
-mkdir ./guac/guacamole/record >/dev/null 2>&1
-mkdir ./proxy >/dev/null 2>&1
-mkdir ./proxy/nginx >/dev/null 2>&1
-mkdir ./proxy/nginx/conf.d >/dev/null 2>&1
-mkdir ./proxy/nginx/static >/dev/null 2>&1
+mkdir ./cert-import >/dev/null 2>&1
+mkdir ./database >/dev/null 2>&1
+mkdir ./database/data >/dev/null 2>&1
+mkdir ./database/init >/dev/null 2>&1
+chmod -R +x ./database/init
+mkdir ./guacamole >/dev/null 2>&1
+mkdir ./guacamole/conf >/dev/null 2>&1
+mkdir ./guacamole/drive >/dev/null 2>&1
+mkdir ./guacamole/record >/dev/null 2>&1
+mkdir ./nginx >/dev/null 2>&1
+mkdir ./nginx/conf.d >/dev/null 2>&1
+mkdir ./nginx/static >/dev/null 2>&1
 echo "done"
 echo "Downloading files.."
 wget -nv -O ./scripts/reset.sh "${REPO_STUB}/scripts/reset.sh"
 wget -nv -O ./scripts/certimport-entrypoint.sh "${REPO_STUB}/scripts/certimport-entrypoint.sh"
-wget -nv -O ./guac/docker-compose.yml "${REPO_STUB}/guac/docker-compose.yml"
-wget -nv -O ./guac/.env "${REPO_STUB}/guac/.env"
-wget -nv -O ./guac/guacamole/conf/server.xml "${REPO_STUB}/guac/guacamole/conf/server.xml"
-wget -nv -O ./proxy/docker-compose.yml "${REPO_STUB}/proxy/docker-compose.yml"
-wget -nv -O ./proxy/.env "${REPO_STUB}/proxy/.env"
-#wget -nv -O ./proxy/nginx/conf/nginx.conf "${REPO_STUB}/proxy/nginx/conf/nginx.conf"
-wget -nv -O ./proxy/nginx/conf/certbot.conf "${REPO_STUB}/proxy/nginx/conf/certbot.conf"
-wget -nv -O ./proxy/nginx/conf/default.conf "${REPO_STUB}/proxy/nginx/conf/default.conf"
-wget -nv -O ./proxy/nginx/wwwroot/index.html "${REPO_STUB}/proxy/nginx/wwwroot/index.html"
+wget -nv -O ./docker-compose.yml "${REPO_STUB}/docker-compose.yml"
+wget -nv -O ./.env "${REPO_STUB}/.env"
+wget -nv -O ./guacamole/conf/server.xml "${REPO_STUB}/guacamole/conf/server.xml"
+#wget -nv -O ./nginx/conf/nginx.conf "${REPO_STUB}/proxy/nginx/conf/nginx.conf"
+wget -nv -O /nginx/conf/certbot.conf "${REPO_STUB}/nginx/conf/certbot.conf"
+wget -nv -O /nginx/conf/default.conf "${REPO_STUB}/nginx/conf/default.conf"
+wget -nv -O /nginx/wwwroot/index.html "${REPO_STUB}/nginx/wwwroot/index.html"
 chmod +x ./scripts/reset.sh
 chmod +x ./scripts/certimport-entrypoint.sh
 echo "done"
 echo "Creating database initialisation data..."
-docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./guac/database/init/initdb.sql
+docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./database/init/initdb.sql
 echo "done"
 echo "Copying DEFAULT syno-ca-cert.pem for import to container(s)..."
 # Grab DiskStation's default certificate (make sure the AD SSL self-cert is set as the default!)
-for i in `cat /usr/syno/etc/certificate/_archive/DEFAULT` ; do cp -f /usr/syno/etc/certificate/_archive/$i/syno-ca-cert.pem ./guac/cert-import/ ; done
+for i in `cat /usr/syno/etc/certificate/_archive/DEFAULT` ; do cp -f /usr/syno/etc/certificate/_archive/$i/syno-ca-cert.pem ./cert-import/ ; done
 echo "done"
 echo "************************************************************************"
 echo " prepare.sh finished - check for errors above!"
 echo "************************************************************************"
-echo " You should customise the compose-up.sh file with organisation specific"
-echo " passwords and other settings, then run it:"
-echo " i.e."
-echo " $ sudo ./compose-up.sh"
+echo " You should customise the .env files in the guac and proxy directories"
+echo " with organisation specific passwords and other settings prior to"
+echo " bringing up the stacks."
 echo "************************************************************************"

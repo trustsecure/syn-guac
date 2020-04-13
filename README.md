@@ -20,7 +20,8 @@ cd guac
 mkdir ./scripts
 wget -nv -O ./scripts/prepare.sh "https://raw.githubusercontent.com/trustsecure/syn-guac/master/scripts/prepare.sh"
 chmod +x ./scripts/prepare.sh
-sudo ./scripts/prepare.sh 
+sudo ./scripts/prepare.sh
+
 ~~~
 
 Modify the `.env` file to make implementation specific adjustments such as the DNS FQDN and email address for 

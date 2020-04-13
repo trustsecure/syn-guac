@@ -15,7 +15,7 @@ mkdir ./guacamole/conf >/dev/null 2>&1
 mkdir ./guacamole/drive >/dev/null 2>&1
 mkdir ./guacamole/record >/dev/null 2>&1
 mkdir ./nginx >/dev/null 2>&1
-mkdir ./nginx/conf.d >/dev/null 2>&1
+mkdir ./nginx/conf >/dev/null 2>&1
 mkdir ./nginx/static >/dev/null 2>&1
 echo "done"
 echo "Downloading files.."

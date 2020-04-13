@@ -25,9 +25,9 @@ wget -nv -O ./docker-compose.yml "${REPO_STUB}/docker-compose.yml"
 wget -nv -O ./.env "${REPO_STUB}/.env"
 wget -nv -O ./guacamole/conf/server.xml "${REPO_STUB}/guacamole/conf/server.xml"
 #wget -nv -O ./nginx/conf/nginx.conf "${REPO_STUB}/proxy/nginx/conf/nginx.conf"
-wget -nv -O /nginx/conf/certbot.conf "${REPO_STUB}/nginx/conf/certbot.conf"
-wget -nv -O /nginx/conf/default.conf "${REPO_STUB}/nginx/conf/default.conf"
-wget -nv -O /nginx/wwwroot/index.html "${REPO_STUB}/nginx/wwwroot/index.html"
+wget -nv -O ./nginx/conf/certbot.conf "${REPO_STUB}/nginx/conf/certbot.conf"
+wget -nv -O ./nginx/conf/default.conf "${REPO_STUB}/nginx/conf/default.conf"
+wget -nv -O ./nginx/wwwroot/index.html "${REPO_STUB}/nginx/wwwroot/index.html"
 chmod +x ./scripts/reset.sh
 chmod +x ./scripts/certimport-entrypoint.sh
 echo "done"

@@ -23,8 +23,8 @@ chmod +x ./scripts/prepare.sh
 sudo ./scripts/prepare.sh 
 ~~~
 
-Modify the `.env` file to make implementation specific adjustments, the DNS FQDN and email address for certificate issuing,
-domain name and suffix etc.  when done run it:
+Modify the `.env` file to make implementation specific adjustments such as the DNS FQDN and email address for 
+certificate issuance, domain name and suffix etc. 
 
 To **Bring up the stack**:
 ~~~sh
